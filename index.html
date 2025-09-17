@@ -1,0 +1,2327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ultimate Tourist Safety Blockchain</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a2e;
+            --tertiary-bg: #16213e;
+            --card-bg: rgba(26, 26, 46, 0.8);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --border-glow: rgba(0, 255, 255, 0.3);
+            --primary-cyan: #00ffff;
+            --electric-blue: #0080ff;
+            --neon-purple: #9d4edd;
+            --neon-green: #39ff14;
+            --danger-red: #ff073a;
+            --warning-orange: #ff8c00;
+            --text-primary: #ffffff;
+            --text-secondary: #b8c5d6;
+            --text-muted: #6c757d;
+            --glow-primary: 0 0 0px var(--primary-cyan);
+            --glow-secondary: 0 0 5px var(--electric-blue);
+            --shadow-deep: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 50%, var(--tertiary-bg) 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Advanced Particle System */
+        .particle-system {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-cyan) 0%, transparent 70%);
+            animation: float 20s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% { 
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { 
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glow);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--primary-cyan), var(--electric-blue));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: var(--glow-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.2rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-links a:hover::before {
+            left: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-cyan);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 10;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary-cyan), var(--electric-blue), var(--neon-purple));
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+            text-shadow: var(--glow-primary);
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero p {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+        
+        .hero .subtitle {
+             font-size: clamp(1.5rem, 4vw, 2.2rem);
+             font-family: 'Orbitron', monospace;
+             margin-bottom: 3rem;
+        }
+
+
+        .cta-button {
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-cyan), var(--electric-blue));
+            border: none;
+            border-radius: 50px;
+            color: var(--primary-bg);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--glow-primary), var(--shadow-deep);
+        }
+
+        /* Section Styling */
+        .section {
+            min-height: 100vh;
+            padding: 8rem 2rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .section-header {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 4rem;
+            background: linear-gradient(45deg, var(--primary-cyan), var(--electric-blue));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--primary-cyan), var(--electric-blue));
+            border-radius: 2px;
+            box-shadow: var(--glow-primary);
+        }
+
+        /* Glass Card System */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-deep);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--border-glow);
+            box-shadow: var(--glow-secondary), var(--shadow-deep);
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Button System */
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem; /* Increased gap between buttons */
+            margin-bottom: 5rem; /* Increased margin below the grid */
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 2rem; /* Added horizontal padding for more breathing room */
+        }
+
+        .action-btn {
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .action-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+            background: rgba(100, 100, 100, 0.2);
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .action-btn:hover::before {
+            left: 100%;
+        }
+
+        .action-btn:hover:not(:disabled) {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--primary-cyan);
+            box-shadow: var(--glow-primary);
+            color: var(--primary-cyan);
+        }
+
+        .action-btn:active:not(:disabled) {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        .action-btn i {
+            margin-right: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        /* General Input Styles */
+        .form-input, .form-select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-glow);
+            background: rgba(0,0,0,0.3);
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .form-select {
+             -webkit-appearance: none;
+             appearance: none;
+             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2300ffff' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+
+        /* Blockchain Visualizer */
+        .blockchain-container {
+            width: 100%;
+            max-width: 1400px;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-cyan) transparent;
+        }
+
+        .blockchain-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .blockchain-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .blockchain-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, var(--primary-cyan), var(--electric-blue));
+            border-radius: 4px;
+        }
+
+        .blockchain-display {
+            display: flex;
+            gap: 2rem;
+            padding: 1rem;
+            min-width: fit-content;
+        }
+
+        .block {
+            min-width: 350px;
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255, 255, 255, 0.08) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(15px);
+            box-shadow: var(--shadow-deep);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .block::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-cyan), var(--electric-blue), var(--neon-purple));
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .block:hover::before {
+            opacity: 0.7;
+        }
+
+        .block:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--glow-primary), var(--shadow-deep);
+        }
+
+        .block.invalid {
+            border-color: var(--danger-red);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .block.invalid::before {
+            background: var(--danger-red);
+            opacity: 0.8;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .block-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .block-index {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-cyan);
+        }
+
+        .block-timestamp {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .hash-display {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.8rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-cyan);
+            margin: 1rem 0;
+            word-break: break-all;
+        }
+
+        .transaction-list {
+            margin-top: 1.5rem;
+        }
+
+        .transaction-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--neon-green);
+            transition: all 0.3s ease;
+        }
+        
+        .transaction-item.emergency {
+             border-left-color: var(--danger-red);
+        }
+        
+        .transaction-item.moderate-alert {
+            border-left-color: var(--warning-orange);
+        }
+
+        .transaction-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        /* Activity Log */
+        .activity-log {
+            height: 400px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-cyan) transparent;
+        }
+
+        .activity-log::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .activity-log::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .activity-log::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, var(--primary-cyan), var(--electric-blue));
+            border-radius: 3px;
+        }
+
+        .log-entry {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 10px;
+            border-left: 4px solid;
+            animation: slideInRight 0.5s ease;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .log-entry:hover {
+            transform: translateX(8px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .log-entry.success {
+            border-color: var(--neon-green);
+            background: rgba(57, 255, 20, 0.1);
+        }
+
+        .log-entry.info {
+            border-color: var(--primary-cyan);
+            background: rgba(0, 255, 255, 0.1);
+        }
+
+        .log-entry.warning {
+            border-color: var(--warning-orange);
+            background: rgba(255, 140, 0, 0.1);
+        }
+
+        .log-entry.danger {
+            border-color: var(--danger-red);
+            background: rgba(255, 7, 58, 0.1);
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Two Column Layout */
+        .two-col-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1400px;
+            align-items: center;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--electric-blue), var(--neon-purple));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-cyan);
+            box-shadow: var(--glow-secondary);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-cyan);
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 10px var(--primary-cyan));
+        }
+
+        .feature-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .feature-output {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: var(--primary-cyan);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            word-break: break-all;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 1.5rem; /* Added margin for spacing */
+        }
+        
+        .verification-result {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: left;
+            display: none; /* Hidden by default */
+        }
+        .verification-result.verified {
+            background: rgba(57, 255, 20, 0.1);
+            border: 1px solid var(--neon-green);
+        }
+         .verification-result h4 {
+            font-family: 'Orbitron';
+            color: var(--neon-green);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .verification-result p {
+            margin: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        /* Status Indicators */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+
+        .status-online {
+            background: rgba(57, 255, 20, 0.2);
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+        }
+
+        .status-mining {
+            background: rgba(255, 140, 0, 0.2);
+            color: var(--warning-orange);
+            border: 1px solid var(--warning-orange);
+        }
+
+        .status-error {
+            background: rgba(255, 7, 58, 0.2);
+            color: var(--danger-red);
+            border: 1px solid var(--danger-red);
+        }
+        
+        /* Map Section */
+        #safety-map-container {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1400px;
+        }
+        #map {
+            width: 100%;
+            height: 600px;
+            border-radius: 15px;
+            border: 1px solid var(--border-glow);
+            background-color: var(--tertiary-bg);
+        }
+        #street-view {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            background: var(--tertiary-bg);
+            border: 1px solid var(--border-glow);
+            margin-top: 1rem;
+        }
+        #route-info {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+        
+        /* Dashboard Section */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1400px;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-family: 'Orbitron';
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-cyan);
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+        .heatmap-img {
+            width: 100%;
+            border-radius: 15px;
+            border: 1px solid var(--border-glow);
+            margin-top: 1rem;
+        }
+        
+        /* IoT Section */
+        .iot-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            filter: drop-shadow(0 0 20px var(--electric-blue));
+        }
+        .iot-sos-button {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ff4d4d, var(--danger-red));
+            border: 5px solid rgba(255, 7, 58, 0.5);
+            color: white;
+            font-family: 'Orbitron';
+            font-size: 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(255, 7, 58, 0.5);
+        }
+        .iot-sos-button.active {
+            animation: sos-pulse 1s infinite;
+        }
+        @keyframes sos-pulse {
+            0% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 7, 58, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(255, 7, 58, 1); }
+            100% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 7, 58, 0.5); }
+        }
+        
+        /* Biometric Feed */
+        #biometric-feed-container {
+            height: 100px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--border-glow);
+        }
+
+        /* Toast Pop-up System */
+        #toast-container {
+            position: fixed;
+            top: 6rem;
+            right: 2rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .toast-popup {
+            min-width: 350px;
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 5px solid;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            box-shadow: var(--shadow-deep);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            animation: slideInFromRightToast 0.5s ease-in-out;
+        }
+
+        @keyframes slideInFromRightToast {
+            from {
+                transform: translateX(120%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+         @keyframes slideOutToRightToast {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(120%);
+                opacity: 0;
+            }
+        }
+
+        .toast-popup.success { border-color: var(--neon-green); }
+        .toast-popup.info { border-color: var(--primary-cyan); }
+        .toast-popup.warning { border-color: var(--warning-orange); }
+        .toast-popup.danger { border-color: var(--danger-red); }
+
+        /* Translator Chatbot */
+        #translator-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-cyan);
+            background: linear-gradient(135deg, var(--electric-blue), var(--primary-cyan));
+            color: var(--primary-bg);
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2000;
+            box-shadow: var(--glow-primary);
+            transition: all 0.3s ease;
+        }
+        #translator-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px var(--primary-cyan);
+        }
+
+        #translator-popup {
+            position: fixed;
+            bottom: 6.5rem;
+            right: 2rem;
+            width: 400px;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border-glow);
+            background: var(--tertiary-bg);
+            box-shadow: var(--shadow-deep);
+            z-index: 1999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+        }
+
+        #translator-popup.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        #translator-popup iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Danger Zone Alert Modal */
+        #danger-zone-alert {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: none; /* Changed to none */
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #danger-zone-alert.show {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .danger-alert-box {
+            background: radial-gradient(circle, rgba(255, 7, 58, 0.2), var(--tertiary-bg));
+            border: 2px solid var(--danger-red);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 600px;
+            box-shadow: 0 0 50px var(--danger-red);
+            animation: pulse-danger 2s infinite;
+        }
+        
+        @keyframes pulse-danger {
+            0% { box-shadow: 0 0 30px rgba(255, 7, 58, 0.5); }
+            50% { box-shadow: 0 0 60px rgba(255, 7, 58, 1); }
+            100% { box-shadow: 0 0 30px rgba(255, 7, 58, 0.5); }
+        }
+
+        .danger-alert-box i {
+            font-size: 5rem;
+            color: var(--danger-red);
+            margin-bottom: 2rem;
+        }
+        
+        .danger-alert-box h2 {
+            font-family: 'Orbitron';
+            font-size: 2.5rem;
+            color: var(--danger-red);
+            margin-bottom: 1rem;
+        }
+
+        .danger-alert-box p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .danger-alert-box .action-btn {
+            background: var(--danger-red);
+            color: white;
+            border-color: var(--danger-red);
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .two-col-layout, #safety-map-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .section {
+                padding: 6rem 1rem 2rem;
+            }
+            .btn-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .feature-grid, .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .blockchain-display {
+                gap: 1rem;
+            }
+            .block {
+                min-width: 280px;
+                padding: 1.5rem;
+            }
+            #toast-container {
+                right: 1rem;
+                left: 1rem;
+                top: 5rem;
+                width: auto;
+            }
+             #translator-popup {
+                width: calc(100vw - 2rem);
+                height: 70vh;
+                right: 1rem;
+                bottom: 6rem;
+            }
+        }
+
+        /* Loading Animations */
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid var(--primary-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Glow Effects */
+        .glow-text {
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            z-index: -2;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="toast-container"></div>
+    <canvas class="matrix-bg" id="matrixCanvas"></canvas>
+    <div class="particle-system" id="particleSystem"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Heimdall</div>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#demo">Blockchain Demo</a></li>
+                <li><a href="#generate-id">Generate ID</a></li>
+                <li><a href="#safety-map">Live Safety Map</a></li>
+                 <li><a href="#authority-dashboard">Authority Dashboard</a></li>
+                <li><a href="#iot-device">IoT Wearable</a></li>
+                <li><a href="#innovations">Innovations</a></li>
+                <li><a href="#features">Tech Stack</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Danger Zone Alert Modal -->
+    <div id="danger-zone-alert">
+        <div class="danger-alert-box">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h2>DANGER ZONE ALERT</h2>
+            <p id="danger-zone-description">You have entered a high-risk area known for specific threats. It is strongly advised to leave immediately.</p>
+            <button class="action-btn" id="danger-zone-dismiss">Acknowledge & Close</button>
+        </div>
+    </div>
+
+
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>Heimdall</h1>
+            <p class="subtitle">Pioneering a Safer Nation for Tourists with AI and Blockchain.</p>
+            <p>A Smart Tourist Safety System using AI, geo-fencing, and blockchain IDs for a revolutionary, secure, and seamless travel experience.</p>
+            <button class="cta-button" onclick="document.getElementById('demo').scrollIntoView()">
+                Explore The Tech
+            </button>
+        </div>
+    </section>
+
+    <section id="demo" class="section">
+        <h2 class="section-header">Interactive Blockchain Demo</h2>
+        
+        <div class="btn-grid">
+            <button class="action-btn" id="connectWallet">
+                <i class="fas fa-wallet"></i> Connect Wallet
+            </button>
+            <button class="action-btn" id="registerTourist" disabled>
+                <i class="fas fa-user-plus"></i> Register Tourist
+            </button>
+            <button class="action-btn" id="logSOS" disabled>
+                <i class="fas fa-exclamation-triangle"></i> Emergency SOS
+            </button>
+            <button class="action-btn" id="reportLocation" disabled>
+                <i class="fas fa-map-marker-alt"></i> Update Location
+            </button>
+            <button class="action-btn" id="verifyIdentity" disabled>
+                <i class="fas fa-shield-alt"></i> Verify Identity
+            </button>
+            <button class="action-btn" id="mineBlock" disabled>
+                <i class="fas fa-cube"></i> Mine Pending Transactions
+            </button>
+        </div>
+
+        <div class="glass-card" style="width: 100%; max-width: 1400px; margin-bottom: 2rem;">
+            <h3 style="margin-bottom: 1.5rem; color: var(--primary-cyan);">📊 Real-Time Activity Monitor</h3>
+            <div class="activity-log" id="activityLog"></div>
+        </div>
+
+        <div class="glass-card" style="width: 100%; max-width: 1400px;">
+            <h3 style="margin-bottom: 1.5rem; color: var(--primary-cyan);">⛓ Live Blockchain Visualization</h3>
+            <div class="blockchain-container">
+                <div class="blockchain-display" id="blockchainDisplay"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="generate-id" class="section">
+        <h2 class="section-header">Digital Tourist ID Generation</h2>
+        <div class="glass-card" style="width: 100%; max-width: 800px;">
+            <h3 style="color: var(--primary-cyan); margin-bottom: 1rem;"><i class="fas fa-id-card"></i> Create Your Secure Blockchain ID</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Issue a secure, temporary digital ID for tourists at entry points. This ID links essential information on the blockchain for the duration of their visit.</p>
+            <form id="generate-id-form">
+                <input type="text" class="form-input" placeholder="Full Name (e.g., John Doe)" required>
+                <input type="text" class="form-input" placeholder="Passport or Aadhaar No." required>
+                <input type="text" class="form-input" placeholder="Emergency Contact Name" required>
+                <input type="tel" class="form-input" placeholder="Emergency Contact Phone" required>
+                <label for="visit-end-date" style="color: var(--text-secondary); display: block; text-align: left; margin-bottom: 0.5rem;">Visit End Date (ID Expiry)</label>
+                <input type="date" id="visit-end-date" class="form-input" required>
+                <button type="submit" class="action-btn" style="width: 100%;">Generate Secure ID</button>
+            </form>
+             <div class="feature-output" id="generated-id-output" style="display: none; margin-top: 2rem;"></div>
+        </div>
+    </section>
+    
+    <section id="safety-map" class="section">
+        <h2 class="section-header">AI-Powered Live Safety Map</h2>
+        <div id="safety-map-container">
+            <div id="map"></div>
+            <div class="glass-card">
+                <h3 style="color: var(--primary-cyan); margin-bottom: 1rem;"><i class="fas fa-route"></i> Emergency Routing</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">Click on the map to simulate your location. If you land in a danger zone, an alert will be triggered.</p>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Or, use the controls below to find the nearest emergency service.</p>
+                
+                <label for="origin-input" style="color: var(--text-secondary);">Your Current Location</label>
+                <input type="text" id="origin-input" class="form-input" placeholder="Enter Your Location or Click Map">
+                
+                <label for="service-type-select" style="color: var(--text-secondary);">Service Needed</label>
+                <select id="service-type-select" class="form-select">
+                    <option value="hospital">Hospital</option>
+                    <option value="police">Police Station</option>
+                </select>
+                
+                <button class="action-btn" style="width: 100%; margin-bottom: 1rem;" id="calculate-emergency-route-btn">Find Nearest & Route</button>
+                <button class="action-btn" style="width: 100%; background: linear-gradient(135deg, #555, #333);" id="clear-route-btn">Clear Map</button>
+                
+                <div id="route-info-container" style="display: none;">
+                    <div id="route-info"></div>
+                    <div id="street-view"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <section id="authority-dashboard" class="section">
+        <h2 class="section-header">Authority Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="glass-card" style="grid-column: 1 / -1;">
+                 <h3 style="color: var(--primary-cyan); margin-bottom: 1rem;"><i class="fas fa-chart-line"></i> Guwahati Tourist Activity</h3>
+                 <div id="heatmap-placeholder" style="width: 100%; height: 400px; border-radius: 15px; border: 1px solid var(--border-glow);"></div>
+            </div>
+             <div class="glass-card">
+                 <h3 style="color: var(--primary-cyan); margin-bottom: 1rem;"><i class="fas fa-search"></i> Tourist ID Lookup</h3>
+                 <input type="text" class="form-input" id="dashboard-tourist-id" placeholder="Enter Tourist ID (e.g., T-12345)">
+                 <button class="action-btn" id="dashboard-lookup-btn">Lookup Record</button>
+                 <div class="feature-output" id="dashboard-lookup-output" style="display: none; margin-top: 1rem;"></div>
+            </div>
+            <div class="glass-card">
+                <h3 style="color: var(--primary-cyan); margin-bottom: 1rem;"><i class="fas fa-file-alt"></i> Automated E-FIR System</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">If a tourist is unresponsive after a high-priority SOS, the system can auto-generate an E-FIR with their last known data.</p>
+                <button class="action-btn" id="efir-btn">Simulate E-FIR Generation for T-67890</button>
+                 <div class="feature-output" id="efir-output" style="display: none; margin-top: 1rem;"></div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="iot-device" class="section">
+        <h2 class="section-header">The 'Aegis' IoT Wearable</h2>
+        <div class="two-col-layout">
+            <div style="text-align: center;">
+                 <img src="C:\Users\Basu\Downloads\Aegis.png" alt="Aegis IoT Wearable" class="iot-image">
+            </div>
+            <div class="glass-card">
+                 <h3 style="color: var(--primary-cyan); margin-bottom: 1rem;"><i class="fas fa-user-shield"></i> Your Personal Guardian</h3>
+                 <p class="feature-description">The Aegis band provides one-tap SOS and automatic motion-based alerts, now with biometric monitoring for ultimate peace of mind.</p>
+                 <div style="text-align: center; margin: 2rem 0;">
+                     <button class="iot-sos-button" id="iot-sos-btn">SOS</button>
+                 </div>
+                 <h4 style="color: var(--primary-cyan); margin-bottom: 1rem;">Biometric & Movement Log</h4>
+                 <div id="biometric-feed-container">
+                    <canvas id="biometric-chart"></canvas>
+                 </div>
+                 <div class="activity-log" id="iot-log" style="height: 150px; margin-top: 1rem;"></div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="innovations" class="section">
+        <h2 class="section-header">Next-Generation Safety Features</h2>
+        <div class="feature-grid">
+             <div class="feature-card">
+                 <div class="feature-icon"><i class="fas fa-users"></i></div>
+                 <h4 class="feature-title">Decentralized Witness System</h4>
+                 <p class="feature-description">Nearby users can anonymously verify an SOS, adding crowd-sourced credibility to alerts for faster, more accurate responses from authorities.</p>
+                 <button class="action-btn" id="witness-sim-btn">Simulate Witness Verification</button>
+                 <div class="feature-output" id="witness-output">Awaiting SOS event...</div>
+            </div>
+            <div class="feature-card">
+                 <div class="feature-icon"><i class="fas fa-map-signs"></i></div>
+                 <h4 class="feature-title">AI Predictive Itinerary</h4>
+                 <p class="feature-description">Plan your trip and let our AI generate the safest route and schedule, avoiding risks based on real-time and historical data.</p>
+                 <button class="action-btn" id="planner-sim-btn">Generate Safe Guwahati Itinerary</button>
+                 <div class="feature-output" id="planner-output">Plan a route to see AI suggestions.</div>
+            </div>
+            <div class="feature-card">
+                 <div class="feature-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                 <h4 class="feature-title">Smart Contract Insurance</h4>
+                 <p class="feature-description">Automated, instant payouts for verified incidents like theft. A police report on the blockchain can trigger an immediate claim.</p>
+                 <button class="action-btn" id="insurance-sim-btn">Simulate Automated Claim</button>
+                 <div class="feature-output" id="insurance-output">Awaiting claim event...</div>
+            </div>
+             <div class="feature-card">
+                 <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                 <h4 class="feature-title">Blockchain Reputation</h4>
+                 <p class="feature-description">After a verified transaction (e.g., taxi ride), tourists can leave immutable reviews on the blockchain, building a tamper-proof trust score for providers.</p>
+                 <button class="action-btn" id="reputation-sim-btn">Simulate Provider Review</button>
+                 <div class="feature-output" id="reputation-output">Awaiting transaction...</div>
+            </div>
+             <div class="feature-card">
+                 <div class="feature-icon"><i class="fas fa-microphone-alt"></i></div>
+                 <h4 class="feature-title">AI De-escalation Assistant</h4>
+                 <p class="feature-description">In a tense situation, activate a mode that provides real-time, translated phrases to calmly handle common scams while logging evidence to the blockchain.</p>
+                 <button class="action-btn" id="deescalation-sim-btn">Activate Assistant</button>
+                 <div class="feature-output" id="deescalation-output">Assistant is offline.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="identity" class="section">
+         <h2 class="section-header">Blockchain Identity Verification</h2>
+         <div class="two-col-layout">
+             <div class="feature-card">
+                 <div class="feature-icon"><i class="fas fa-user-check"></i></div>
+                 <h4 class="feature-title">Verify a Tourist</h4>
+                 <p class="feature-description">Check the immutable, blockchain-verified identity of a tourist using their unique TouristChain ID.</p>
+                 <input type="text" id="verify-tourist-input" class="form-input" placeholder="Enter Tourist ID (e.g., T-12345)">
+                 <button class="action-btn" id="verify-tourist-btn">Verify</button>
+                 <div class="verification-result" id="tourist-verification-result"></div>
+             </div>
+             <div class="feature-card">
+                  <div class="feature-icon"><i class="fas fa-taxi"></i></div>
+                 <h4 class="feature-title">Verify a Service Provider</h4>
+                 <p class="feature-description">Ensure the authenticity of service providers like taxi drivers or guides before engaging with them.</p>
+                 <input type="text" id="verify-provider-input" class="form-input" placeholder="Enter Provider ID (e.g., P-67890)">
+                 <button class="action-btn" id="verify-provider-btn">Verify</button>
+                 <div class="verification-result" id="provider-verification-result"></div>
+             </div>
+         </div>
+    </section>
+
+    <section id="features" class="section">
+        <h2 class="section-header">Core Technology Stack</h2>
+        <div class="feature-grid">
+             <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                <h4 class="feature-title">AI Anomaly Detection</h4>
+                <p class="feature-description">Our AI constantly analyzes patterns to predict and prevent risks before they happen, monitoring for unusual crowd activity and unsafe route deviations.</p>
+            </div>
+             <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-draw-polygon"></i></div>
+                <h4 class="feature-title">Geo-Fence Alerts</h4>
+                <p class="feature-description">Automated warnings keep tourists away from pre-defined high-risk zones and guide them towards secure locations and verified providers.</p>
+            </div>
+             <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-broadcast-tower"></i></div>
+                <h4 class="feature-title">IoT Integration</h4>
+                <p class="feature-description">Real-time location tracking via the Aegis wearable wristband ensures help can find you, even if you are unable to communicate.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-language"></i></div>
+                 <h4 class="feature-title">NLP Translation</h4>
+                 <p class="feature-description">Our powerful AI assistant translates over 32 global languages into any required Indian language, ensuring clear communication for foreign tourists in emergencies.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-fingerprint"></i></div>
+                <h4 class="feature-title">Hash Generator</h4>
+                <p class="feature-description">Demonstration of the SHA-256 cryptographic hash function that secures all data on the blockchain.</p>
+                <input type="text" id="hashInput" class="form-input" placeholder="Enter data to hash">
+                <div class="feature-output" id="hashOutput">Enter text above</div>
+            </div>
+             <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-code"></i></div>
+                <h4 class="feature-title">Smart Contract</h4>
+                <p class="feature-description">The immutable code governing all tourist safety protocols, emergency responses, and provider verifications on the blockchain.</p>
+                <div class="feature-output" id="smartContract" style="text-align: left; font-size: 0.75rem; max-height: 250px;">Loading contract...</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="immutability" class="section">
+        <h2 class="section-header">Immutability & Security Test</h2>
+        <div class="glass-card" style="width: 100%; max-width: 800px;">
+            <p style="margin-bottom: 2rem; font-size: 1.2rem; text-align: center;">
+                Try to tamper with the blockchain's history and witness the security mechanisms in action. Any change to a block will invalidate all subsequent blocks.
+            </p>
+            <div id="immutabilityDemo"></div>
+            <button class="action-btn" id="tamperButton" style="margin-top: 2rem;">
+                <i class="fas fa-virus"></i> Attempt Tampering on Block #1
+            </button>
+        </div>
+    </section>
+
+    <!-- Floating Translator Chatbot -->
+    <button id="translator-btn"><i class="fas fa-language"></i></button>
+    <div id="translator-popup">
+        <iframe src="https://tanushka-lokegaonkar-translator.hf.space/?__theme=dark" title="Translator"></iframe>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Enhanced Blockchain Core
+        class TouristBlockchain {
+            constructor() {
+                this.chain = [];
+                this.pendingTransactions = [];
+                this.miningReward = 10;
+                this.difficulty = 2;
+                this.validators = ['0x1a2b3c', '0x4d5e6f', '0x7g8h9i', '0x0j1k2l', '0x3m4n5o'];
+                this.networkStats = {
+                    tps: 0,
+                    hashrate: 0,
+                    activeNodes: 5
+                };
+                this.createGenesisBlock();
+            }
+
+            createGenesisBlock() {
+                const genesis = new Block(0, Date.now(), [{type: 'genesis', data: 'Genesis Block'}], '0');
+                genesis.hash = genesis.calculateHash();
+                this.chain.push(genesis);
+            }
+
+            getLatestBlock() {
+                return this.chain[this.chain.length - 1];
+            }
+
+            addTransaction(transaction) {
+                this.pendingTransactions.push(transaction);
+                 document.getElementById('mineBlock').disabled = false;
+            }
+
+            minePendingTransactions() {
+                if (this.pendingTransactions.length === 0) return null;
+                
+                const block = new Block(
+                    this.getLatestBlock().index + 1,
+                    Date.now(),
+                    this.pendingTransactions,
+                    this.getLatestBlock().hash
+                );
+                
+                block.mineBlock(this.difficulty);
+                this.chain.push(block);
+                this.pendingTransactions = [];
+                this.updateNetworkStats();
+                return block;
+            }
+
+            updateNetworkStats() {
+                this.networkStats.tps = Math.floor(Math.random() * 100) + 50;
+                this.networkStats.hashrate = Math.floor(Math.random() * 1000000) + 500000;
+                this.networkStats.activeNodes = this.validators.length;
+            }
+
+            isChainValid() {
+                for (let i = 1; i < this.chain.length; i++) {
+                    const currentBlock = this.chain[i];
+                    const previousBlock = this.chain[i - 1];
+
+                    if (currentBlock.hash !== currentBlock.calculateHash()) {
+                        return false;
+                    }
+
+                    if (currentBlock.previousHash !== previousBlock.hash) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
+        class Block {
+            constructor(index, timestamp, transactions, previousHash = '') {
+                this.index = index;
+                this.timestamp = timestamp;
+                this.transactions = transactions;
+                this.previousHash = previousHash;
+                this.hash = this.calculateHash();
+                this.nonce = 0;
+                this.validator = null;
+            }
+
+            calculateHash() {
+                return CryptoJS.SHA256(
+                    this.index + 
+                    this.previousHash + 
+                    this.timestamp + 
+                    JSON.stringify(this.transactions) + 
+                    this.nonce
+                ).toString();
+            }
+
+            mineBlock(difficulty) {
+                const target = Array(difficulty + 1).join('0');
+                while (this.hash.substring(0, difficulty) !== target) {
+                    this.nonce++;
+                    this.hash = this.calculateHash();
+                }
+                this.validator = blockchain.validators[Math.floor(Math.random() * blockchain.validators.length)];
+            }
+        }
+
+        // Initialize blockchain
+        const blockchain = new TouristBlockchain();
+        
+        // --- UI Elements & Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // This is the standard and safest way to ensure all HTML elements are loaded before running scripts.
+            renderBlockchain();
+            createParticles();
+            initMatrix();
+            setupOtherFeatures();
+            setupInteractiveDemos();
+            setupBiometricChart();
+        });
+
+        function setupInteractiveDemos() {
+            const connectWalletBtn = document.getElementById('connectWallet');
+            const registerTouristBtn = document.getElementById('registerTourist');
+            const logSOSBtn = document.getElementById('logSOS');
+            const reportLocationBtn = document.getElementById('reportLocation');
+            const verifyIdentityBtn = document.getElementById('verifyIdentity');
+            const mineBlockBtn = document.getElementById('mineBlock');
+            
+            const actionButtons = [registerTouristBtn, logSOSBtn, reportLocationBtn, verifyIdentityBtn];
+
+            connectWalletBtn.onclick = () => {
+                connectWalletBtn.innerHTML = '<i class="fas fa-check-circle"></i> Connected';
+                connectWalletBtn.disabled = true;
+                connectWalletBtn.style.borderColor = 'var(--neon-green)';
+                logActivity(`✅ Wallet connected: 0x...${CryptoJS.lib.WordArray.random(4).toString()}`, 'success', 'fa-wallet');
+                actionButtons.forEach(btn => btn.disabled = false);
+            };
+
+            registerTouristBtn.onclick = () => {
+                const touristName = 'Alice';
+                const tx = { type: 'registration', data: `Tourist ${touristName} registered` };
+                blockchain.addTransaction(tx);
+                logActivity(`-> registerTourist(${touristName}) transaction added to mempool.`, 'info', 'fa-user-plus');
+            };
+
+            logSOSBtn.onclick = () => {
+                const locationHash = 'loc' + CryptoJS.lib.WordArray.random(3).toString();
+                const tx = { type: 'emergency', data: `SOS triggered at ${locationHash}` };
+                blockchain.addTransaction(tx);
+                logActivity(`-> logSOS(${locationHash}) transaction added to mempool.`, 'danger', 'fa-exclamation-triangle');
+            };
+            
+            reportLocationBtn.onclick = () => {
+                 const tx = { type: 'location', data: `Location update: Eiffel Tower` };
+                 blockchain.addTransaction(tx);
+                 logActivity(`-> reportLocation(Eiffel Tower) transaction added to mempool.`, 'info', 'fa-map-marker-alt');
+            };
+            
+            verifyIdentityBtn.onclick = () => {
+                const tx = { type: 'verification', data: `Identity Verified: Alice` };
+                blockchain.addTransaction(tx);
+                logActivity(`-> verifyIdentity(Alice) transaction added to mempool.`, 'success', 'fa-shield-alt');
+            };
+
+            mineBlockBtn.onclick = () => {
+                if (blockchain.pendingTransactions.length === 0) {
+                    logActivity('No pending transactions to mine.', 'warning', 'fa-exclamation-circle');
+                    return;
+                }
+                
+                mineBlockBtn.innerHTML = '<div class="loading-spinner"></div> Mining...';
+                mineBlockBtn.disabled = true;
+                
+                setTimeout(() => {
+                    const block = blockchain.minePendingTransactions();
+                    if (block) {
+                        renderBlockchain();
+                        logActivity(`Block #${block.index} successfully mined with ${block.transactions.length} transactions.`, 'success', 'fa-cube');
+                    }
+                    mineBlockBtn.innerHTML = '<i class="fas fa-cube"></i> Mine Pending Transactions';
+                }, 2000);
+            };
+
+            // IoT Section Logic
+            const iotLog = document.getElementById('iot-log');
+            const iotSosBtn = document.getElementById('iot-sos-btn');
+            iotSosBtn.onclick = () => {
+                iotSosBtn.classList.add('active');
+                logActivity('❗ Aegis Band SOS button pressed!', 'danger', 'fa-broadcast-tower');
+                
+                const tx = { type: 'emergency', data: 'SOS from Aegis Wearable' };
+                blockchain.addTransaction(tx);
+                logActivity(`-> Aegis SOS transaction added to mempool.`, 'danger', 'fa-exclamation-triangle');
+                
+                setTimeout(() => iotSosBtn.classList.remove('active'), 2000);
+            };
+
+            // Simulate movement detection
+            setTimeout(() => {
+                 const logEntry = document.createElement('div');
+                 logEntry.textContent = `${new Date().toLocaleTimeString()}: No movement for 1 hour. Logging moderate alert.`;
+                 iotLog.insertBefore(logEntry, iotLog.firstChild);
+                 const tx = { type: 'moderate-alert', data: 'Moderate Alert: No movement for 1 hour.' };
+                 blockchain.addTransaction(tx);
+                 logActivity(`-> Auto-Alert (Moderate) added to mempool.`, 'warning', 'fa-clock');
+            }, 8000);
+
+            setTimeout(() => {
+                 const logEntry = document.createElement('div');
+                 logEntry.textContent = `${new Date().toLocaleTimeString()}: No movement for 3 hours. HIGH PRIORITY SOS!`;
+                 iotLog.insertBefore(logEntry, iotLog.firstChild);
+                 const tx = { type: 'emergency', data: 'High Priority SOS: No movement for 3 hours.' };
+                 blockchain.addTransaction(tx);
+                 logActivity(`-> Auto-Alert (HIGH PRIORITY) added to mempool.`, 'danger', 'fa-exclamation-triangle');
+            }, 16000);
+
+
+            // Identity Verification Logic
+            document.getElementById('verify-tourist-btn').onclick = () => {
+                 const resultEl = document.getElementById('tourist-verification-result');
+                 resultEl.style.display = 'block';
+                 resultEl.className = 'verification-result verified';
+                 resultEl.innerHTML = `
+                    <h4><i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i> VERIFIED</h4>
+                    <p><strong>ID:</strong> T-12345</p>
+                    <p><strong>Name:</strong> A. Johnson</p>
+                    <p><strong>Emergency Contact:</strong> Verified</p>
+                 `;
+            };
+            document.getElementById('verify-provider-btn').onclick = () => {
+                 const resultEl = document.getElementById('provider-verification-result');
+                 resultEl.style.display = 'block';
+                 resultEl.className = 'verification-result verified';
+                 resultEl.innerHTML = `
+                    <h4><i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i> VERIFIED</h4>
+                    <p><strong>ID:</strong> P-67890</p>
+                    <p><strong>Service:</strong> Taxi Driver</p>
+                    <p><strong>Rating:</strong> 4.9/5.0</p>
+                 `;
+            };
+
+            
+
+            const statCounters = document.querySelectorAll('.stat-value');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = +counter.getAttribute('data-target');
+                        const speed = 200;
+                        const updateCount = () => {
+                            const count = +counter.innerText;
+                            const inc = target / speed;
+                            if(count < target) {
+                                counter.innerText = (count + inc).toFixed(target % 1 === 0 ? 0 : 1);
+                                setTimeout(updateCount, 10);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        };
+                        updateCount();
+                        observer.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.5 });
+            statCounters.forEach(counter => observer.observe(counter));
+
+            // --- Innovations Section Logic ---
+            document.getElementById('witness-sim-btn').onclick = () => {
+                const output = document.getElementById('witness-output');
+                output.innerHTML = 'SOS event active. Awaiting witness confirmations...<br>Verifications: <span id="witness-count">0</span>/3';
+                let count = 0;
+                const interval = setInterval(() => {
+                    count++;
+                    document.getElementById('witness-count').textContent = count;
+                    if (count >= 3) {
+                        clearInterval(interval);
+                        output.innerHTML += '<br><strong style="color: var(--neon-green);">SOS Event Verified by Community!</strong>';
+                        logActivity('SOS event confirmed by decentralized witness system.', 'success', 'fa-users');
+                    }
+                }, 1000);
+            };
+
+            document.getElementById('planner-sim-btn').onclick = () => {
+                const output = document.getElementById('planner-output');
+                output.innerHTML = `<strong>Generated Safe Route:</strong><br>
+                1. Kamakhya Temple<br>
+                2. Umananda Temple<br>
+                <strong style="color:var(--warning-orange);">AI Alert: Avoid Fancy Bazaar area after 8 PM (High Crowd Density).</strong><br>
+                3. Assam State Museum`;
+                logActivity('AI has generated a safe itinerary for Guwahati.', 'info', 'fa-map-signs');
+            };
+            
+            document.getElementById('insurance-sim-btn').onclick = () => {
+                const output = document.getElementById('insurance-output');
+                output.innerHTML = 'Theft report filed. Awaiting verification...';
+                setTimeout(() => {
+                    output.innerHTML = 'Police verification received on blockchain.<br><strong style="color:var(--neon-green);">Smart contract triggered. 0.1 ETH transferred for immediate needs.</strong>';
+                    logActivity('Smart contract insurance claim automatically processed.', 'success', 'fa-file-invoice-dollar');
+                    blockchain.addTransaction({type: 'insurance', data: 'Automated insurance payout: 0.1 ETH'});
+                }, 2000);
+            };
+
+            document.getElementById('reputation-sim-btn').onclick = () => {
+                const output = document.getElementById('reputation-output');
+                output.innerHTML = `Taxi ride with P-67890 complete.<br>
+                <strong>Rating (5/5) and review "Very safe driver" added to immutable ledger.</strong>`;
+                logActivity('Immutable review added for service provider.', 'success', 'fa-shield-alt');
+            };
+
+            document.getElementById('deescalation-sim-btn').onclick = () => {
+                const output = document.getElementById('deescalation-output');
+                output.innerHTML = `<strong>Assistant Activated:</strong><br>
+                Displaying in local language:<br>
+                "I only want to pay the official meter price."<br>
+                <small>(Audio/location evidence logging started)</small>`;
+                logActivity('AI De-escalation Assistant activated.', 'warning', 'fa-microphone-alt');
+            };
+
+            // Translator Chatbot Logic
+            const translatorBtn = document.getElementById('translator-btn');
+            const translatorPopup = document.getElementById('translator-popup');
+            translatorBtn.onclick = () => {
+                translatorPopup.classList.toggle('show');
+            };
+
+            // Danger Zone Alert Logic
+            const dangerZoneAlert = document.getElementById('danger-zone-alert');
+            document.getElementById('danger-zone-dismiss').onclick = () => {
+                dangerZoneAlert.classList.remove('show');
+            };
+            
+            // Generate ID Form Logic
+            document.getElementById('generate-id-form').onsubmit = (e) => {
+                e.preventDefault();
+                const touristName = e.target.elements[0].value;
+                const newId = `T-${Math.floor(Math.random() * 90000) + 10000}`;
+                const output = document.getElementById('generated-id-output');
+                output.style.display = 'block';
+                output.innerHTML = `<strong>Success!</strong><br>
+                                    Blockchain ID Generated: <strong>${newId}</strong><br>
+                                    Name: ${touristName}`;
+                logActivity(`New Tourist ID ${newId} created for ${touristName}.`, 'success', 'fa-id-card');
+                const tx = { type: 'id-generation', data: `ID ${newId} created` };
+                blockchain.addTransaction(tx);
+                logActivity(`-> ID Generation for ${newId} added to mempool.`, 'info', 'fa-cube');
+            };
+            
+            // Authority Dashboard Logic
+            document.getElementById('dashboard-lookup-btn').onclick = () => {
+                const id = document.getElementById('dashboard-tourist-id').value || 'T-12345';
+                const output = document.getElementById('dashboard-lookup-output');
+                output.style.display = 'block';
+                output.innerHTML = `<strong>Record Found for ${id}:</strong><br>
+                                    Name: A. Johnson<br>
+                                    Status: <span style="color:var(--neon-green);">Active</span><br>
+                                    Last known location: Kamakhya Temple`;
+                logActivity(`Authority dashboard lookup for ID ${id}.`, 'info', 'fa-search');
+            };
+            
+            document.getElementById('efir-btn').onclick = () => {
+                const output = document.getElementById('efir-output');
+                output.style.display = 'block';
+                output.innerHTML = `<strong>E-FIR Draft Generated:</strong><br>
+                                    Case ID: MP2025-GUW-0451<br>
+                                    Status: Pending Officer Approval`;
+                logActivity(`Automated E-FIR generated for missing tourist.`, 'danger', 'fa-file-alt');
+            };
+        }
+
+        // --- VISUALIZATION & LOGGING ---
+
+        function showToast(message, type = 'info', icon = 'fa-info-circle') {
+            const toastContainer = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast-popup ${type}`;
+            toast.innerHTML = `
+                <i class="fas ${icon}" style="font-size: 1.5rem;"></i>
+                <span>${message}</span>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            const removeToast = () => {
+                toast.style.animation = 'slideOutToRightToast 0.5s ease-in-out forwards';
+                setTimeout(() => {
+                    if (toast.parentElement) {
+                        toast.parentElement.removeChild(toast);
+                    }
+                }, 500);
+            };
+
+            toast.addEventListener('click', removeToast);
+
+            setTimeout(removeToast, 5000); // Auto-dismiss after 5 seconds
+        }
+
+        function logActivity(message, type = 'info', icon = 'fa-info-circle') {
+            const activityLog = document.getElementById('activityLog');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.innerHTML = `
+                <i class="fas ${icon}" style="margin-right: 0.8rem; font-size: 1.1rem;"></i>
+                <span>${message}</span>
+                <small style="margin-left: auto; opacity: 0.7;">${new Date().toLocaleTimeString()}</small>
+            `;
+            activityLog.insertBefore(entry, activityLog.firstChild);
+            
+            // Trigger a toast for important, non-mempool messages
+            if (!message.includes('mempool')) {
+                showToast(message, type, icon);
+            }
+
+            while (activityLog.children.length > 50) {
+                activityLog.removeChild(activityLog.lastChild);
+            }
+        }
+
+        function renderBlockchain() {
+            const blockchainDisplay = document.getElementById('blockchainDisplay');
+            blockchainDisplay.innerHTML = '';
+            
+            blockchain.chain.forEach((block, index) => {
+                const blockElement = document.createElement('div');
+                blockElement.className = 'block';
+                
+                const isChainCurrentlyValid = blockchain.isChainValid();
+                let isBlockValid = true;
+                if(!isChainCurrentlyValid){
+                    let firstInvalidIndex = -1;
+                     for (let i = 1; i < blockchain.chain.length; i++) {
+                         if (blockchain.chain[i].hash !== blockchain.chain[i].calculateHash() || blockchain.chain[i].previousHash !== blockchain.chain[i-1].hash) {
+                             firstInvalidIndex = i;
+                             break;
+                         }
+                    }
+                    if(index >= firstInvalidIndex) {
+                        isBlockValid = false;
+                        blockElement.classList.add('invalid');
+                    }
+                }
+                
+                blockElement.innerHTML = `
+                    <div class="block-header">
+                        <div class="block-index">Block #${block.index}</div>
+                        ${isBlockValid ? `<div class="status-indicator status-online" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;"><i class="fas fa-check-circle"></i> Valid</div>` : `<div class="status-indicator status-error" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;"><i class="fas fa-times-circle"></i> Invalid</div>`}
+                    </div>
+                    <div class="hash-display">
+                        <strong>Hash:</strong><br>
+                        ${block.hash}
+                    </div>
+                    <div class="hash-display">
+                        <strong>Previous Hash:</strong><br>
+                        ${block.previousHash}
+                    </div>
+                    ${block.validator ? `<div class="hash-display"><strong>Validator:</strong><br>${block.validator}</div>` : ''}
+                    <div class="transaction-list">
+                        <strong>Transactions (${block.transactions.length}):</strong>
+                        ${block.transactions.map(tx => `<div class="transaction-item ${tx.type === 'emergency' ? 'emergency' : ''} ${tx.type === 'moderate-alert' ? 'moderate-alert' : ''}">${tx.data}</div>`).join('')}
+                    </div>
+                `;
+                
+                blockchainDisplay.appendChild(blockElement);
+                
+                setTimeout(() => {
+                    blockElement.style.opacity = '1';
+                    blockElement.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+            
+            setTimeout(() => {
+                if(blockchainDisplay.parentElement) {
+                    blockchainDisplay.parentElement.scrollLeft = blockchainDisplay.parentElement.scrollWidth;
+                }
+            }, 500);
+        }
+        
+        // --- BACKGROUND & ANIMATIONS ---
+        
+        function createParticles() {
+            const particleSystem = document.getElementById('particleSystem');
+            setInterval(() => {
+                if (document.querySelectorAll('.floating-particle').length < 30) {
+                    const particle = document.createElement('div');
+                    particle.className = 'floating-particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.width = particle.style.height = (Math.random() * 4 + 2) + 'px';
+                    particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                    particle.style.animationDelay = '-' + Math.random() * 20 + 's';
+                    particleSystem.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 25000);
+                }
+            }, 500);
+        }
+
+        function initMatrix() {
+            const canvas = document.getElementById('matrixCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const matrix = "BLOCKCHAIN01TOURIST";
+            const matrixArray = matrix.split("");
+            const fontSize = 10;
+            const columns = canvas.width / fontSize;
+            const drops = Array(Math.floor(columns)).fill(1);
+            
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#00ffff';
+                ctx.font = fontSize + 'px monospace';
+                
+                drops.forEach((y, index) => {
+                    const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                    ctx.fillText(text, index * fontSize, y * fontSize);
+                    
+                    if (y * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[index] = 0;
+                    }
+                    drops[index]++;
+                });
+            }
+            setInterval(drawMatrix, 35);
+        }
+
+        // --- OTHER FEATURES SETUP ---
+        function setupOtherFeatures() {
+            document.getElementById('tamperButton').onclick = function() {
+                if (blockchain.chain.length > 1) {
+                    const targetBlockIndex = 1; 
+                    const originalTransaction = JSON.stringify(blockchain.chain[targetBlockIndex].transactions[0]);
+                    blockchain.chain[targetBlockIndex].transactions[0] = { type: 'tampered', data: 'TAMPERED DATA!'};
+                    
+                    logActivity('🔴 DATA TAMPERING ATTEMPTED on Block #1', 'danger', 'fa-virus');
+                    renderBlockchain();
+                    
+                     setTimeout(() => {
+                        logActivity('Chain validation failed due to hash mismatch!', 'danger', 'fa-shield-virus');
+                        logActivity('🛡️ Security Protocol: Reverting to last valid state...', 'warning', 'fa-shield-alt');
+                        blockchain.chain[targetBlockIndex].transactions[0] = JSON.parse(originalTransaction);
+                        renderBlockchain();
+                    }, 2000);
+                } else {
+                    logActivity('Add more blocks before attempting to tamper.', 'warning', 'fa-exclamation-circle');
+                }
+            };
+
+            document.getElementById('hashInput').addEventListener('input', (e) => {
+                const output = document.getElementById('hashOutput');
+                if (e.target.value) {
+                    const hash = CryptoJS.SHA256(e.target.value).toString();
+                    output.innerHTML = `<div><strong>SHA-256:</strong><br>${hash}</div>`;
+                } else {
+                    output.textContent = 'Enter text above';
+                }
+            });
+
+            const contract = `// TouristSafety Smart Contract
+pragma solidity ^0.8.0;
+
+contract TouristSafety {
+    struct Tourist {
+        string passportHash;
+        string currentLocation;
+        bool isEmergency;
+    }
+    
+    mapping(address => Tourist) public tourists;
+    event SOSTriggered(address tourist, string location);
+    
+    function register(string memory pHash, string memory loc) public {
+        tourists[msg.sender] = Tourist(pHash, loc, false);
+    }
+    
+    function triggerSOS(string memory loc) public {
+        tourists[msg.sender].isEmergency = true;
+        tourists[msg.sender].currentLocation = loc;
+        emit SOSTriggered(msg.sender, loc);
+    }
+};`;
+            document.getElementById('smartContract').textContent = contract;
+
+            document.getElementById('immutabilityDemo').innerHTML = `<p class="feature-description" style="color: var(--text-secondary);">Click the 'Attempt Tampering' button below to modify data in Block #1 and see how the chain invalidates itself.</p>`
+        }
+        
+        // BIOMETRIC CHART
+        let biometricChart;
+        function setupBiometricChart() {
+            const ctx = document.getElementById('biometric-chart').getContext('2d');
+            const data = {
+                labels: Array(20).fill(''),
+                datasets: [{
+                    label: 'Heart Rate (BPM)',
+                    data: Array(20).fill(80),
+                    borderColor: 'var(--neon-green)',
+                    backgroundColor: 'rgba(57, 255, 20, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0
+                }]
+            };
+            
+            biometricChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            min: 50,
+                            max: 180,
+                            ticks: { color: 'var(--text-secondary)'}
+                        },
+                        x: {
+                            ticks: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            setInterval(() => {
+                const newData = biometricChart.data.datasets[0].data;
+                newData.shift();
+                newData.push(Math.floor(Math.random() * 10) + 75); // Normal heart rate
+                biometricChart.update('none');
+            }, 1000);
+            
+            // Add a panic simulator
+            document.getElementById('iot-device').addEventListener('dblclick', () => {
+                logActivity('Biometric anomaly detected! Simulating panic event.', 'danger', 'fa-heartbeat');
+                const newData = biometricChart.data.datasets[0].data;
+                for(let i=0; i<5; i++){
+                    setTimeout(() => {
+                        newData.shift();
+                        newData.push(Math.floor(Math.random() * 20) + 140); // Panic heart rate
+                    }, i * 500);
+                }
+            });
+        }
+        
+        // --- GOOGLE MAPS API LOGIC (KEYLESS WORKAROUND) ---
+        let map;
+        let directionsService;
+        let directionsRenderer;
+        let infoWindow;
+        let activeMarkers = [];
+        let dangerZoneCircles = [];
+        let userLocationMarker;
+        let heatmap; // For the dashboard heatmap
+        
+        // Hardcoded data for Guwahati as a fallback for the keyless API
+        const emergencyLocations = {
+            hospital: [
+                { name: "Gauhati Medical College and Hospital (GMCH)", position: { lat: 26.1450, lng: 91.7952 } },
+                { name: "Narayana Superspeciality Hospital", position: { lat: 26.1139, lng: 91.7136 } },
+                { name: "Dispur Hospital", position: { lat: 26.1362, lng: 91.7915 } }
+            ],
+            police: [
+                { name: "Paltan Bazaar Police Station", position: { lat: 26.1802, lng: 91.7523 } },
+                { name: "Dispur Police Station", position: { lat: 26.1378, lng: 91.7905 } },
+                { name: "Pan Bazaar Police Station", position: { lat: 26.1852, lng: 91.7408 } }
+            ]
+        };
+
+        const dangerZones = [
+            { lat: 26.1802, lng: 91.7523, radius: 600, severity: 4, description: "Paltan Bazaar: High risk of pickpocketing in crowded market." },
+            { lat: 26.1428, lng: 91.7918, radius: 800, severity: 5, description: "Six Mile area: Avoid after dark due to poor lighting." },
+            { lat: 26.185, lng: 91.74, radius: 500, severity: 3, description: "Pan Bazaar: Caution advised, known for tourist scams." },
+            { lat: 26.11, lng: 91.71, radius: 700, severity: 4, description: "Near ISBT: Reports of luggage theft." },
+            { lat: 26.16, lng: 91.77, radius: 550, severity: 2, description: "Uzan Bazaar: Generally safe, but be aware at night." },
+            { lat: 26.19, lng: 91.79, radius: 900, severity: 5, description: "Noonmati area: High alert, multiple incidents reported." },
+            { lat: 26.12, lng: 91.7, radius: 450, severity: 3, description: "Lokhra area: Moderate risk of theft." },
+            { lat: 26.1, lng: 91.75, radius: 500, severity: 2, description: "Basistha Chariali: Avoid isolated streets." },
+            { lat: 26.17, lng: 91.8, radius: 650, severity: 4, description: "Narengi area: Increased crime rates reported." },
+            { lat: 26.08, lng: 91.68, radius: 300, severity: 1, description: "Airport area: Low risk zone." },
+            { lat: 26.15, lng: 91.72, radius: 750, severity: 5, description: "Maligaon area: High threat level, avoid visiting alone." },
+            { lat: 26.188, lng: 91.76, radius: 400, severity: 3, description: "Fancy Bazaar: Be cautious with valuables." },
+            { lat: 26.13, lng: 91.76, radius: 500, severity: 2, description: "Ganeshguri: Low to moderate risk." },
+            { lat: 26.1445, lng: 91.7362, radius: 250, severity: 1, description: "Safe zone: City Center." },
+            { lat: 26.09, lng: 91.78, radius: 600, severity: 4, description: "Khanapara: Area known for tourist scams." },
+            { lat: 26.2, lng: 91.7, radius: 700, severity: 5, description: "Adabari: Restricted area, do not enter." },
+            { lat: 26.15, lng: 91.82, radius: 500, severity: 3, description: "Chandmari: Exercise caution at night." },
+            { lat: 26.11, lng: 91.8, radius: 400, severity: 2, description: "VIP Road: Low risk of incidents." },
+            { lat: 26.195, lng: 91.72, radius: 900, severity: 5, description: "Jalukbari: High risk zone, avoid if possible." },
+            { lat: 26.165, lng: 91.75, radius: 350, severity: 1, description: "Silpukhuri: Verified safe neighborhood." }
+        ];
+        
+        function initMap() {
+            const center = { lat: 26.1445, lng: 91.7362 }; // Guwahati
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: center,
+                styles: [ // Custom dark-mode map styles
+                    { elementType: "geometry", stylers: [{ color: "#242f3e" }] }, { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] }, { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] }, { featureType: "administrative.locality", elementType: "labels.text.fill", stylers: [{ color: "#d59563" }] }, { featureType: "poi", elementType: "labels.text.fill", stylers: [{ color: "#d59563" }] }, { featureType: "poi.park", elementType: "geometry", stylers: [{ color: "#263c3f" }] }, { featureType: "poi.park", elementType: "labels.text.fill", stylers: [{ color: "#6b9a76" }] }, { featureType: "road", elementType: "geometry", stylers: [{ color: "#38414e" }] }, { featureType: "road", elementType: "geometry.stroke", stylers: [{ color: "#212a37" }] }, { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#9ca5b3" }] }, { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#746855" }] }, { featureType: "road.highway", elementType: "geometry.stroke", stylers: [{ color: "#1f2835" }] }, { featureType: "road.highway", elementType: "labels.text.fill", stylers: [{ color: "#f3d19c" }] }, { featureType: "transit", elementType: "geometry", stylers: [{ color: "#2f3948" }] }, { featureType: "transit.station", elementType: "labels.text.fill", stylers: [{ color: "#d59563" }] }, { featureType: "water", elementType: "geometry", stylers: [{ color: "#17263c" }] }, { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#515c6d" }] }, { featureType: "water", elementType: "labels.text.stroke", stylers: [{ color: "#17263c" }] },
+                ]
+            });
+            
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers: true });
+            directionsRenderer.setMap(map);
+            infoWindow = new google.maps.InfoWindow();
+
+            document.getElementById('calculate-emergency-route-btn').addEventListener('click', findNearestAndRoute);
+            document.getElementById('clear-route-btn').addEventListener('click', clearMap);
+
+            drawDangerZones();
+            
+            // Map click listener for danger zone alerts
+            map.addListener('click', (e) => {
+                const clickedLocation = e.latLng;
+                
+                if (userLocationMarker) {
+                    userLocationMarker.setMap(null);
+                }
+                userLocationMarker = new google.maps.Marker({
+                    position: clickedLocation,
+                    map: map,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 8,
+                        fillColor: "white",
+                        fillOpacity: 1,
+                        strokeColor: "black",
+                        strokeWeight: 2,
+                    },
+                    title: "Your Location"
+                });
+
+                let inDangerZone = false;
+                for(const zone of dangerZones) {
+                    const zoneCenter = new google.maps.LatLng(zone.lat, zone.lng);
+                    const distance = google.maps.geometry.spherical.computeDistanceBetween(clickedLocation, zoneCenter);
+                    if (distance < zone.radius) {
+                        const alertModal = document.getElementById('danger-zone-alert');
+                        document.getElementById('danger-zone-description').textContent = zone.description;
+                        alertModal.classList.add('show');
+                        inDangerZone = true;
+                        break;
+                    }
+                }
+            });
+            initHeatmap(); // Initialize the dashboard heatmap
+        }
+        
+        function drawDangerZones() {
+            const getZoneColor = (severity) => {
+                if (severity >= 5) return "#ff073a"; // danger-red
+                if (severity === 4) return "#ff4500";
+                if (severity === 3) return "#ff8c00"; // warning-orange
+                return "#ffd700";
+            };
+
+            dangerZones.forEach(zone => {
+                const circle = new google.maps.Circle({
+                    strokeColor: getZoneColor(zone.severity),
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: getZoneColor(zone.severity),
+                    fillOpacity: 0.25,
+                    map,
+                    center: { lat: zone.lat, lng: zone.lng },
+                    radius: zone.radius,
+                    clickable: false, // Make circles non-interactive to allow map clicks
+                });
+                dangerZoneCircles.push(circle);
+            });
+        }
+
+        function findNearestAndRoute() {
+            const originAddress = document.getElementById('origin-input').value;
+            const serviceType = document.getElementById('service-type-select').value;
+            if (!originAddress) return;
+
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ address: originAddress }, (results, status) => {
+                if (status === 'OK') {
+                    const originLocation = results[0].geometry.location;
+                    map.setCenter(originLocation);
+                    
+                    const locations = emergencyLocations[serviceType];
+                    let closestLocation = null;
+                    let minDistance = Infinity;
+                    
+                    clearMarkers();
+
+                    locations.forEach(location => {
+                        const distance = google.maps.geometry.spherical.computeDistanceBetween(originLocation, location.position);
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            closestLocation = location;
+                        }
+                        createMarker(location.position, serviceType, location.name);
+                    });
+
+                    if (closestLocation) {
+                        calculateRoute(originLocation, closestLocation.position);
+                    } else {
+                        alert('No predefined ' + serviceType + ' locations found.');
+                    }
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+
+        function calculateRoute(origin, destination) {
+             const request = {
+                origin: origin,
+                destination: destination,
+                travelMode: 'DRIVING'
+            };
+
+            directionsService.route(request, (result, status) => {
+                 if (status == 'OK') {
+                    directionsRenderer.setDirections(result);
+                    const leg = result.routes[0].legs[0];
+                    const routeInfo = document.getElementById('route-info');
+                    const routeInfoContainer = document.getElementById('route-info-container');
+                     routeInfo.innerHTML = `
+                        <p><strong>Nearest Service:</strong></p>
+                        <p><strong>Distance:</strong> ${leg.distance.text}</p>
+                        <p><strong>Duration:</strong> ${leg.duration.text}</p>
+                    `;
+                    routeInfoContainer.style.display = 'block';
+
+                    // Street view is not reliably available without the official Places library to get panorama data
+                    const streetViewEl = document.getElementById("street-view");
+                    streetViewEl.innerHTML = `<p style="color:var(--text-secondary); padding: 1rem;">Street View may be unavailable with Keyless API.</p>`;
+                }
+            });
+        }
+
+        function createMarker(position, type, title) {
+            const marker = new google.maps.Marker({
+                map,
+                position: position,
+                title: title,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 12,
+                    fillColor: type === 'hospital' ? "#39ff14" : "#0080ff", // neon-green or electric-blue
+                    fillOpacity: 1,
+                    strokeWeight: 1,
+                    strokeColor: "white",
+                },
+            });
+
+            marker.addListener('click', () => {
+                infoWindow.setContent(title);
+                infoWindow.open(map, marker);
+            });
+            activeMarkers.push(marker);
+        }
+
+        function clearMap() {
+            directionsRenderer.setDirections({routes: []});
+            clearMarkers();
+            if(userLocationMarker) userLocationMarker.setMap(null);
+            document.getElementById('origin-input').value = '';
+            document.getElementById('route-info-container').style.display = 'none';
+        }
+
+        function clearMarkers() {
+            for (let i = 0; i < activeMarkers.length; i++) {
+                activeMarkers[i].setMap(null);
+            }
+            activeMarkers = [];
+        }
+
+        // --- HEATMAP SIMULATION ---
+        let heatmapCircles = [];
+        function initHeatmap() {
+            const heatmapCenter = { lat: 26.1445, lng: 91.7362 };
+            heatmap = new google.maps.Map(document.getElementById("heatmap-placeholder"), {
+                zoom: 12,
+                center: heatmapCenter,
+                disableDefaultUI: true,
+                styles: [ { elementType: "geometry", stylers: [{ color: "#242f3e" }] }, { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] }, { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] }, { featureType: "administrative.locality", elementType: "labels.text.fill", stylers: [{ color: "#d59563" }] }, { featureType: "poi", elementType: "labels.text.fill", stylers: [{ color: "#d59563" }] }, { featureType: "poi.park", elementType: "geometry", stylers: [{ color: "#263c3f" }] }, { featureType: "poi.park", elementType: "labels.text.fill", stylers: [{ color: "#6b9a76" }] }, { featureType: "road", elementType: "geometry", stylers: [{ color: "#38414e" }] }, { featureType: "road", elementType: "geometry.stroke", stylers: [{ color: "#212a37" }] }, { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#9ca5b3" }] }, { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#746855" }] }, { featureType: "road.highway", elementType: "geometry.stroke", stylers: [{ color: "#1f2835" }] }, { featureType: "road.highway", elementType: "labels.text.fill", stylers: [{ color: "#f3d19c" }] }, { featureType: "transit", elementType: "geometry", stylers: [{ color: "#2f3948" }] }, { featureType: "transit.station", elementType: "labels.text.fill", stylers: [{ color: "#d59563" }] }, { featureType: "water", elementType: "geometry", stylers: [{ color: "#17263c" }] }, { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#515c6d" }] }, { featureType: "water", elementType: "labels.text.stroke", stylers: [{ color: "#17263c" }] }, ]
+            });
+            const getZoneColor = (s) => s >= 5 ? "#ff073a" : s === 4 ? "#ff4500" : s === 3 ? "#ff8c00" : "#ffd700";
+            dangerZones.forEach(zone => {
+                const circle = new google.maps.Circle({
+                    strokeColor: getZoneColor(zone.severity), strokeOpacity: 0, fillColor: getZoneColor(zone.severity), fillOpacity: 0.3, map: heatmap, center: { lat: zone.lat, lng: zone.lng }, radius: zone.radius,
+                });
+                heatmapCircles.push({circle: circle, baseRadius: zone.radius, severity: zone.severity});
+            });
+            animateHeatmap();
+        }
+        function animateHeatmap() {
+            setInterval(() => {
+                const time = Date.now() * 0.002;
+                heatmapCircles.forEach(item => {
+                    const pulseFactor = Math.sin(time + item.baseRadius) * 0.2 + 1.0;
+                    item.circle.setRadius(item.baseRadius * pulseFactor);
+                    item.circle.setOptions({ fillOpacity: 0.2 + (Math.sin(time + item.severity) * 0.15) });
+                });
+            }, 50);
+        }
+
+    </script>
+    <script async defer src="https://cdn.jsdelivr.net/gh/somanchiu/Keyless-Google-Maps-API@v7.1/mapsJavaScriptAPI.js?callback=initMap&libraries=geometry"></script>
+</body>
+</html>
+
